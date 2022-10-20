@@ -1,7 +1,8 @@
 "use strict";
 const titleClickHandler = function (event) {
   event.preventDefault();
-  ment = this;
+  
+  const clickedElement = this;
   console.log("Link was clicked!");
 
   const activeLinks = document.querySelectorAll(".titles a.active");
