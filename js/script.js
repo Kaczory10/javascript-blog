@@ -1,66 +1,66 @@
 const templates = {
   articleLink: Handlebars.compile(
-    document.querySelector("#template-article-link").innerHTML
+    document.querySelector('#template-article-link').innerHTML
   ),
   articleLinkInline: Handlebars.compile(
-    document.querySelector("#template-article-link-inline").innerHTML
+    document.querySelector('#template-article-link-inline').innerHTML
   ),
   tagCloudLink: Handlebars.compile(
-    document.querySelector("#template-tag-cloud-link").innerHTML
+    document.querySelector('#template-tag-cloud-link').innerHTML
   ),
   authorCloudLink: Handlebars.compile(
-    document.querySelector("#template-author-cloud-link").innerHTML
+    document.querySelector('#template-author-cloud-link').innerHTML
   ),
 };
-("use strict"); //plik w strick mode"zie
+('use strict'); //plik w strick mode"zie
 const titleClickHandler = function (event) {
   //argument parametr funcji event
   event.preventDefault(); //usuwam domyslne działanie
 
   const clickedElement = this;
-  console.log("Link was clicked!");
+  console.log('Link was clicked!');
 
-  const activeLinks = document.querySelectorAll(".titles a.active");
+  const activeLinks = document.querySelectorAll('.titles a.active');
 
-  clickedElement.classList.add("active");
+  clickedElement.classList.add('active');
   /* [DONE] add class 'active' to the clicked link */
 
   for (let activeLink of activeLinks) {
-    activeLink.classList.remove("active");
+    activeLink.classList.remove('active');
   }
   /* [DONE] remove class 'active' from all article links  */
 
-  console.log("clickedElement:", clickedElement);
+  console.log('clickedElement:', clickedElement);
 
-  const activeArticles = document.querySelectorAll("article.post.active");
-  const href = clickedElement.getAttribute("href");
+  const activeArticles = document.querySelectorAll('article.post.active');
+  const href = clickedElement.getAttribute('href');
   /* get 'href' attribute from the clicked link */
   const article = document.querySelector(href);
   /* find the correct article using the selector (value of 'href' attribute) */
 
-  article.classList.add("active");
+  article.classList.add('active');
   /* add class 'active' to the correct article */
 
   for (let activeArticle of activeArticles) {
-    activeArticle.classList.remove("active");
+    activeArticle.classList.remove('active');
   }
 };
 
-const optArticleSelector = ".post",
-  optTitleSelector = ".post-title",
-  optTitleListSelector = ".titles",
-  optArticleTagsSelector = ".post-tags .list",
-  optArticleAuthorSelector = ".post-author",
+const optArticleSelector = '.post',
+  optTitleSelector = '.post-title',
+  optTitleListSelector = '.titles',
+  optArticleTagsSelector = '.post-tags .list',
+  optArticleAuthorSelector = '.post-author',
   optCloudClassCount = 5,
-  optCloudClassPrefix = "tag-size-",
-  optTagsListSelector = ".list.tags",
-  optAuthorsListSelector = ".list.authors";
+  optCloudClassPrefix = 'tag-size-',
+  optTagsListSelector = '.list.tags',
+  optAuthorsListSelector = '.list.authors';
 
-function generateTitleLinks(customSelector = "") {
+function generateTitleLinks(customSelector = '') {
   const titleList = document.querySelector(optTitleListSelector);
 
   function clearMessages() {
-    titleList.innerHTML = "";
+    titleList.innerHTML = '';
   }
 
   clearMessages();
@@ -74,10 +74,10 @@ function generateTitleLinks(customSelector = "") {
   /* find all the articles and save them to variable: articles */
   /* Done */
 
-  let html = "";
+  let html = '';
 
   for (let article of articles) {
-    const articleId = article.getAttribute("id");
+    const articleId = article.getAttribute('id');
     /* get the article id */
     /* Done */
 
@@ -99,10 +99,10 @@ function generateTitleLinks(customSelector = "") {
   }
 
   titleList.innerHTML = html;
-  const links = document.querySelectorAll(".titles a");
+  const links = document.querySelectorAll('.titles a');
 
   for (let link of links) {
-    link.addEventListener("click", titleClickHandler);
+    link.addEventListener('click', titleClickHandler);
   }
 }
 
@@ -119,13 +119,13 @@ function generateTags() {
     const tagsWrapper = article.querySelector(optArticleTagsSelector);
     /* find tags wrapper */
 
-    const articleTags = article.getAttribute("data-tags"); // "cat cactus scissors"
+    const articleTags = article.getAttribute('data-tags'); // "cat cactus scissors"
     /* get tags from data-tags attribute */
 
-    const articleTagsArray = articleTags.split(" "); // ["cat", "cactus", "scissors"]
+    const articleTagsArray = articleTags.split(' '); // ["cat", "cactus", "scissors"]
     /* split tags into array */
 
-    let html = "";
+    let html = '';
     /* make html variable with empty string */
 
     for (let tag of articleTagsArray) {
@@ -158,7 +158,7 @@ function generateTags() {
     const allTagsData = { tags: [] };
     /* [NEW] create variable for all links HTML code */
     const tagsParams = calculateTagsParams(allTags);
-    console.log("tagsParams:", tagsParams);
+    console.log('tagsParams:', tagsParams);
 
     /* [NEW] START LOOP: for each tag in allTags: */
     for (let tag in allTags) {
@@ -183,18 +183,18 @@ function tagClickHandler(event) {
   event.preventDefault();
   /* prevent default action for this event */
   const clickedElement = this;
-  console.log("Link was clicked!");
+  console.log('Link was clicked!');
   /* make new constant named "clickedElement" and give it the value of "this" */
-  const href = clickedElement.getAttribute("href");
+  const href = clickedElement.getAttribute('href');
   /* make a new constant "href" and read the attribute "href" of the clicked element */
-  const tag = href.replace("#tag-", "");
+  const tag = href.replace('#tag-', '');
   /* make a new constant "tag" and extract tag from the "href" constant */
   const tags = document.querySelectorAll('a.active[href^="#tag-"]');
   /* find all tag links with class active */
 
   for (let tagArticle of tags) {
     /* START LOOP: for each active tag link */
-    tagArticle.classList.remove("active");
+    tagArticle.classList.remove('active');
     /* remove class active */
   }
   /* END LOOP: for each active tag link */
@@ -203,7 +203,7 @@ function tagClickHandler(event) {
   /* find all tag links with "href" attribute equal to the "href" constant */
   for (let tag of tagArticles) {
     /* START LOOP: for each found tag link */
-    tag.classList.add("active");
+    tag.classList.add('active');
     /* add class active */
   }
   /* END LOOP: for each found tag link */
@@ -219,7 +219,7 @@ function addClickListenersToTags() {
   for (let link of tagLinks) {
     /* START LOOP: for each link */
 
-    link.addEventListener("click", tagClickHandler);
+    link.addEventListener('click', tagClickHandler);
     /* add tagClickHandler as event listener for that link */
   }
 
@@ -236,10 +236,10 @@ function generateAuthors() {
 
   for (let article of articles) {
     const authorsWrapper = article.querySelector(optArticleAuthorSelector);
-    const articleAuthor = article.getAttribute("data-author");
+    const articleAuthor = article.getAttribute('data-author');
     const linkHTMLData = { id: articleAuthor, title: articleAuthor };
     const linkHTML = templates.articleLinkInline(linkHTMLData);
-    authorsWrapper.innerHTML = "by " + linkHTML;
+    authorsWrapper.innerHTML = 'by ' + linkHTML;
 
     if (!allAuthors[articleAuthor]) {
       allAuthors[articleAuthor] = 1;
@@ -256,7 +256,7 @@ function generateAuthors() {
   const allAuthorsData = { authors: [] };
 
   const authorsParams = calculateAuthorsParams(allAuthors);
-  console.log("authorsParams:", authorsParams);
+  console.log('authorsParams:', authorsParams);
 
   for (let author in allAuthors) {
     // const authorLink = '<li><a href="#author-' + author + '" class="' + calculateAuthorsClass(allAuthors[author], authorsParams) + '">' + author + ' (' + allAuthors[author] + ') ' + '</a></li>';
@@ -265,7 +265,6 @@ function generateAuthors() {
     allAuthorsData.authors.push({
       author: author,
       count: allAuthors[author],
-      className: calculateTagClass(allAuthors[author], authorsParams),
     });
   }
 
@@ -278,16 +277,16 @@ function authorClickHandler(event) {
 
   const clickedElement = this;
 
-  const href = clickedElement.getAttribute("href");
+  const href = clickedElement.getAttribute('href');
 
-  const author = href.replace("#author-", "");
+  const author = href.replace('#author-', '');
   /* make a new constant "tag" and extract tag from the "href" constant */
   const authors = document.querySelectorAll('a.active[href^="#author-"]');
   /* find all tag links with class active */
 
   for (let author of authors) {
     /* START LOOP: for each active tag link */
-    author.classList.remove("active");
+    author.classList.remove('active');
     /* remove class active */
   }
   /* END LOOP: for each active tag link */
@@ -295,7 +294,7 @@ function authorClickHandler(event) {
   /* find all tag links with "href" attribute equal to the "href" constant */
   for (let author of authorArticles) {
     /* START LOOP: for each found tag link */
-    author.classList.add("active");
+    author.classList.add('active');
     /* add class active */
   }
   /* END LOOP: for each found tag link */
@@ -307,7 +306,7 @@ function addClickListenersToAuthors() {
   const authorLinks = document.querySelectorAll('a[href^="#author-"]');
   console.log(authorLinks);
   for (let authorLink of authorLinks) {
-    authorLink.addEventListener("click", authorClickHandler);
+    authorLink.addEventListener('click', authorClickHandler);
   }
 }
 function calculateTagsParams(tags) {
@@ -346,12 +345,12 @@ function calculateTagClass(count, params) {
   return optCloudClassPrefix + classNumber;
 }
 
-function calculateAuthorsClass(count, params) {
-  const normalizedCount = count - params.min;
-  const normalizedMax = params.max - params.min;
-  console.log(normalizedCount, normalizedMax);
-  const percentage = normalizedCount / normalizedMax;
-  const classNumber = Math.floor(percentage * (optCloudClassCount - 1) + 1);
+// function calculateAuthorsClass(count, params) {
+//   const normalizedCount = count - params.min;
+//   const normalizedMax = params.max - params.min;
+//   console.log(normalizedCount, normalizedMax);
+//   const percentage = normalizedCount / normalizedMax;
+//   const classNumber = Math.floor(percentage * (optCloudClassCount - 1) + 1);
 
-  return optCloudClassPrefix + classNumber;
-}
+//   return optCloudClassPrefix + classNumber;
+// }
